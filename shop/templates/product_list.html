@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1 style="text-align: center; color: #007BFF;">Shop</h1>
+
+    <ol style="list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for prod in products %}
+            <li style="margin: 15px; border: 1px solid #007BFF; border-radius: 8px; overflow: hidden; width: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.3s;">
+                <a href="{{ prod.slug }}" style="text-decoration: none; color: inherit; display: block; padding: 10px; text-align: center;">
+                    <h2 style="font-size: 1.5em; margin: 0;">{{ prod.name }}</h2>
+                    <p style="color: #555;">{{ prod.description }}</p>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <style>
+        ol li:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+        }
+    </style>
+{% endblock main %}
