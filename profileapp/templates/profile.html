@@ -28,6 +28,13 @@
                     Change Password
                 </button>
             </a>
+
+            <!-- NEW: Enable 2FA Button -->
+            <a href="http://127.0.0.1:8000/account/2fa/account/two_factor/" style="text-decoration: none;">
+                <button style="margin: 5px; padding: 10px 15px; font-size: 1em; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+                    Enable 2FA
+                </button>
+            </a>
         </div>
 
         <form action="{% url 'logout' %}" method="post" style="text-align: center; margin-top: 20px;">

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div style="padding: 20px;">
+    <!-- Centered Title -->
+    <h2 style="text-align: center;">AI Chat</h2>
+    
+    <!-- Centered Chat Container -->
+    <div id="chat-container" style="width: 60%; margin: 0 auto;">
+        <div id="chat-box" 
+             style="width: 100%; height: 400px; border: 1px solid #ccc; 
+                    padding: 10px; overflow-y: auto; background-color: #f9f9f9;">
+        </div>
+
+        <!-- Chat Form -->
+        <form id="chat-form" method="post" style="margin-top: 10px;">
+            {% csrf_token %}
+            <div id="input-container" style="display: flex;">
+                <input type="text" 
+                       id="user-input" 
+                       name="message" 
+                       placeholder="Type a message..." 
+                       style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <button type="submit" 
+                        style="padding: 10px 15px; margin-left: 10px; border: none; 
+                               background-color: #007bff; color: white; border-radius: 5px; cursor: pointer;">
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Include jQuery if not already in base.html -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#chat-form").submit(function (event) {
+            event.preventDefault(); // Prevent page refresh
+
+            let userMessage = $("#user-input").val();
+            if (!userMessage.trim()) return;
+
+            let csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // Get CSRF token
+
+            // Display user's message
+            $("#chat-box").append("<p><strong>You:</strong> " + userMessage + "</p>");
+
+            // Capture the form data before clearing the input
+            let formData = $(this).serialize();
+
+            // Clear the input field
+            $("#user-input").val("");
+
+            // AJAX request to your chatbot API
+            $.ajax({
+                type: "POST",
+                url: "/chat/api/",
+                data: formData,
+                headers: { "X-CSRFToken": csrfToken },
+                success: function (data) {
+                    $("#chat-box").append("<p><strong>AI:</strong> " + data.response + "</p>");
+                    $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
+                },
+                error: function () {
+                    alert("Error connecting to the server.");
+                }
+            });
+        });
+    });
+</script>
+{% endblock main %}
