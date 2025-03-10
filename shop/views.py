@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product, Category
+from .models import Product, Category, FAQ, Policy  # Added FAQ and Policy
 from cart.forms import AddToCartForm
 from rest_framework import generics
 from .serializers import ProductSerializer
@@ -36,6 +36,17 @@ def category_details_view(request, slug):
 
     return render(request, "category_details.html", context)
 
+# ✅ New views for FAQs and Policies - fixed for flat structure
+
+def faq_page(request):
+    faqs = FAQ.objects.all()
+    return render(request, 'faq_page.html', {'faqs': faqs})  # No 'shop/' prefix anymore
+
+def policies_page(request):
+    policies = Policy.objects.all()
+    return render(request, 'policies_page.html', {'policies': policies})  # No 'shop/' prefix anymore
+
+# REST API Views (unchanged)
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

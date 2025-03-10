@@ -164,7 +164,7 @@
             <a href="{% url 'profile_url' %}" class="nav-link">
                 <i class="fa fa-user"></i>
             </a>
-            <a href="{% url 'register_url' %}" class="nav-link">
+            <a href="{% url 'django_registration_register' %}" class="nav-link">
                 <i class="fa fa-user-plus"></i>
             </a>
         </div>
@@ -174,7 +174,8 @@
     <div class="dropdown" id="dropdown-menu">
         <a href="{% url 'shop_url' %}">Shop Us</a>
         <a href="{% url 'homepage_url' %}">About Us</a>
-        <a href="{% url 'chat_url' %}">AI Assistant</a>
+        <a href="{% url 'chat_page_url' %}">Chat Bot</a>
+
     </div>
 
     {% block main %}

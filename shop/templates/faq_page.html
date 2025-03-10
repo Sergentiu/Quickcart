@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1 style="text-align: center; color: #007BFF;">Frequently Asked Questions</h1>
+
+    <div style="max-width: 800px; margin: 20px auto; padding: 15px; background-color: white; border: 1px solid #007BFF; border-radius: 8px;">
+        {% for faq in faqs %}
+            <div style="border-bottom: 1px solid #ddd; padding: 10px 0;">
+                <strong style="color: #007BFF;">Q: {{ faq.question }}</strong><br>
+                <p style="margin: 5px 0;">A: {{ faq.answer }}</p>
+            </div>
+        {% empty %}
+            <p>No FAQs available.</p>
+        {% endfor %}
+    </div>
+{% endblock main %}

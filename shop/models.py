@@ -29,3 +29,25 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return f"/shop/{self.slug}"
+    
+# New FAQ model
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+
+    def __str__(self):
+        return self.question
+    
+    class Meta:
+        verbose_name_plural = 'FAQS'
+
+# New Policy model
+class Policy(models.Model):
+    key = models.CharField(max_length=50, unique=True)  # Example keys: "return_policy", "warranty_policy"
+    value = models.TextField()
+
+    def __str__(self):
+        return self.key
+    
+    class Meta:
+        verbose_name_plural = 'Policies'

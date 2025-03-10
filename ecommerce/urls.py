@@ -9,17 +9,22 @@ from shop.sitemaps import ProductSitemap, CategorySitemap
 from two_factor import urls as two_factor_urls
 from two_factor.views import LoginView as TwoFactorLoginView
 
+# Import the custom registration view
+from profileapp.views import CustomActivationRegistrationView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cart/', include('cart.urls')),
     path('shop/', include('shop.urls')),
     path('', include('homepage.urls')),
 
-    # Django registration (for sign-up etc.)
+    # Override the registration view to use our custom form
+    path('accounts/register/', CustomActivationRegistrationView.as_view(), name='django_registration_register'),
+
+    # Continue to use the rest of django-registration (activation flow)
     path('accounts/', include('django_registration.backends.activation.urls')),
 
     # 1) Override the default login with the two-factor login view.
-    # This ensures that if a user has 2FA enabled, they are prompted for the TOTP code.
     path('accounts/login/', TwoFactorLoginView.as_view(), name='login'),
 
     # 2) Keep the rest of the auth routes (logout, password reset, etc.)
@@ -36,9 +41,6 @@ urlpatterns = [
         }
     }),
 
-    # Chat
-    path('chat/', include('ai_assistant.urls')),
-
     # Two-factor setup/disable/backup routes
     path(
         'account/2fa/',
@@ -50,6 +52,9 @@ urlpatterns = [
             namespace='two_factor'
         )
     ),
+
+    # Chatbot
+    path('chatbot/', include('chatbot.urls')),
 ]
 
 if settings.DEBUG:

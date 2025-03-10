@@ -5,6 +5,19 @@
     <div style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #007BFF; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <h1 style="text-align: center; color: #007BFF;">Registration</h1>
 
+        {% if form.errors %}
+            <div style="color: red; margin-bottom: 15px; border: 1px solid red; padding: 10px; background-color: #ffe6e6;">
+                <strong>Please correct the following errors:</strong>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field|capfirst }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <form action="" method="post">
             {% csrf_token %}
             <div style="margin-bottom: 20px;">

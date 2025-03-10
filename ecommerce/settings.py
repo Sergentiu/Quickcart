@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     'profileapp',
     'django.contrib.sitemaps',
     'rest_framework',
-    'ai_assistant',
     'django_otp',
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
     'two_factor',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +124,9 @@ TIME_ZONE = 'Europe/Bucharest'  ## Local Time Zone
 USE_I18N = True
 
 USE_TZ = True
+
+# Registration form
+REGISTRATION_FORM = 'profileapp.forms.CustomRegistrationForm'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,0 +1,98 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - hey there
+    - let's go
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - goodbye
+    - see you later
+    - have a nice day
+    - bye bye
+
+- intent: affirm
+  examples: |
+    - yes
+    - indeed
+    - of course
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - never
+    - not really
+    - I don't think so
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - wonderful
+    - I am feeling very good
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - I'm so sad
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: ask_product_price
+  examples: |
+    - What is the price of [Air Force 1](product_name)?
+    - How much does [Jordan 4 Retro](product_name) cost?
+    - Price of [T-Shirt](product_name)?
+    - Can you tell me the cost of [Fridge](product_name)?
+    - What's the price for [Microwave](product_name)?
+    - I want to know how much [Blender](product_name) is.
+    - How much does [Nike Air Force 1](product_name) cost?
+    - Give me the price for [AirPods Pro](product_name).
+    - Tell me the cost of [Adidas Yeezy](product_name).
+    - What's the price of [Burger](product_name)?
+    - How much does a [Bucket](product_name) cost?
+    - How much for [Motor Oil](product_name)?
+
+- intent: ask_product_details
+  examples: |
+    - Can you give details about [AirPods Pro](product_name)?
+    - What are the specifications of [Dell XPS 13](product_name)?
+    - Tell me about [PlayStation 5](product_name).
+    - What can you tell me about [Jeans](product_name)?
+    - Explain the features of [Pizza](product_name).
+
+- intent: check_order_status
+  examples: |
+    - Where is my order with ID [12345](order_id)?
+    - Can you check the status of order [67890](order_id)?
+    - What’s happening with my order [98765](order_id)?
+    - Tell me my order status for [45678](order_id).
+    - I want to know where my order [32165](order_id) is.
+
+- intent: general_greeting
+  examples: |
+    - Hi
+    - Hello
+    - Good morning
+    - How’s it going?
+    - What’s up?
