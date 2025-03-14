@@ -1,6 +1,24 @@
 from rasa_sdk import Action
-from rasa_sdk.events import SlotSet
 import sqlite3
+
+DB_PATH = "C:/Users/sergi/Desktop/ecommerce/db.sqlite3"
+
+# ---------------- FETCH PRODUCT NAMES FROM DATABASE ----------------
+class ActionFetchProductNames(Action):
+    def name(self):
+        return "action_fetch_product_names"
+
+    def run(self, dispatcher, tracker, domain):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT name FROM shop_product")
+        products = [row[0] for row in cursor.fetchall()]
+
+        conn.close()
+
+        dispatcher.utter_message(f"Available products: {', '.join(products)}.")
+        return []
 
 # ---------------- FETCH PRODUCT PRICE ----------------
 class ActionGetProductPrice(Action):
@@ -10,12 +28,10 @@ class ActionGetProductPrice(Action):
     def run(self, dispatcher, tracker, domain):
         product_name = tracker.get_slot("product_name")
 
-        # Connect to Django database
-        conn = sqlite3.connect("C:/Users/sergi/Desktop/ecommerce/db.sqlite3")  # Update path if necessary
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
-        # Query the product table
-        cursor.execute("SELECT price FROM shop_product WHERE name=?", (product_name,))
+        cursor.execute("SELECT price FROM shop_product WHERE LOWER(name) = LOWER(?)", (product_name,))
         product = cursor.fetchone()
 
         if product:
@@ -34,10 +50,10 @@ class ActionGetProductDetails(Action):
     def run(self, dispatcher, tracker, domain):
         product_name = tracker.get_slot("product_name")
 
-        conn = sqlite3.connect("C:/Users/sergi/Desktop/ecommerce/db.sqlite3")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT description FROM shop_product WHERE name=?", (product_name,))
+        cursor.execute("SELECT description FROM shop_product WHERE LOWER(name) = LOWER(?)", (product_name,))
         product = cursor.fetchone()
 
         if product:
@@ -56,10 +72,10 @@ class ActionCheckOrderStatus(Action):
     def run(self, dispatcher, tracker, domain):
         order_id = tracker.get_slot("order_id")
 
-        conn = sqlite3.connect("C:/Users/sergi/Desktop/ecommerce/db.sqlite3")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT status FROM orders_order WHERE id=?", (order_id,))
+        cursor.execute("SELECT status FROM cart_order WHERE id=?", (order_id,))
         order = cursor.fetchone()
 
         if order:
@@ -68,4 +84,48 @@ class ActionCheckOrderStatus(Action):
             dispatcher.utter_message(f"Sorry, I couldn't find order {order_id}.")
 
         conn.close()
+        return []
+
+# ---------------- FETCH FAQ FROM DATABASE ----------------
+class ActionGetFAQ(Action):
+    def name(self):
+        return "action_get_faq"
+
+    def run(self, dispatcher, tracker, domain):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT question, answer FROM shop_faq")
+        faqs = cursor.fetchall()
+
+        conn.close()
+
+        if faqs:
+            faq_list = "\n".join([f"- {faq[0]}: {faq[1]}" for faq in faqs])
+            dispatcher.utter_message(f"Here are some frequently asked questions:\n{faq_list}")
+        else:
+            dispatcher.utter_message("Sorry, I couldn’t find any FAQs.")
+
+        return []
+
+# ---------------- FETCH POLICIES FROM DATABASE ----------------
+class ActionGetPolicies(Action):
+    def name(self):
+        return "action_get_policies"
+
+    def run(self, dispatcher, tracker, domain):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT title, description FROM shop_policy")
+        policies = cursor.fetchall()
+
+        conn.close()
+
+        if policies:
+            policy_list = "\n".join([f"- {policy[0]}: {policy[1]}" for policy in policies])
+            dispatcher.utter_message(f"Here are our policies:\n{policy_list}")
+        else:
+            dispatcher.utter_message("Sorry, I couldn’t find any policies.")
+
         return []

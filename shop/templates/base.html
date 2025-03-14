@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>QuickCart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             background-color: #f8f9fa;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
         }
 
         header {
@@ -19,6 +26,10 @@
             background-color: #007BFF;
             padding: 15px 20px;
             color: white;
+        }
+
+        .dark-mode header {
+            background-color: #1a1a1a;
         }
 
         .nav-items {
@@ -36,12 +47,12 @@
         }
 
         header a:hover {
-            background-color: rgba(255, 255, 255, 0.2); /* Lighter background on hover */
+            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 5px;
         }
 
         header a.active {
-            background-color: rgba(0, 0, 0, 0.3); /* Darker background for active links */
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 5px;
         }
 
@@ -56,25 +67,23 @@
             margin-right: 20px;
         }
 
-        /* The bars of the hamburger icon */
         .bar {
             height: 3px;
             background-color: white;
             border-radius: 2px;
-            transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for animations */
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        /* Animation for hamburger menu icon to form an 'X' when active */
         .hamburger.active .bar:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px); /* Rotate the top bar to form the first part of the 'X' */
+            transform: rotate(45deg) translate(5px, 5px);
         }
 
         .hamburger.active .bar:nth-child(2) {
-            opacity: 0; /* Hide the middle bar */
+            opacity: 0;
         }
 
         .hamburger.active .bar:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px); /* Rotate the bottom bar to form the second part of the 'X' */
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
         /* Dropdown Menu */
@@ -132,10 +141,9 @@
         }
     </style>
 </head>
-<body>
+<body class="{% if request.session.dark_mode %}dark-mode{% endif %}">
     
     <header>
-        <!-- Hamburger icon with animated bars -->
         <div class="hamburger" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -149,24 +157,15 @@
             <a href="{% url 'shop_url' %}" class="nav-link">
                 <i class="fa fa-shopping-bag"></i>
             </a>
-            <nav>
-                <ul>
-                    <li id="carticon">
-                        <a href="{% url 'cart_url' %}" class="nav-link">
-                            <i class="fa fa-shopping-cart"></i>
-                        </a>
-                        {% if cart_count %}
-                        <div id="prodcount">{{ cart_count }}</div>
-                        {% endif %}
-                    </li>
-                </ul>
-            </nav>
+            <a href="{% url 'cart_url' %}" class="nav-link">
+                <i class="fa fa-shopping-cart"></i>
+            </a>
             <a href="{% url 'profile_url' %}" class="nav-link">
                 <i class="fa fa-user"></i>
             </a>
             <a href="{% url 'django_registration_register' %}" class="nav-link">
                 <i class="fa fa-user-plus"></i>
-            </a>
+            </a>            
         </div>
     </header>
 
@@ -175,7 +174,6 @@
         <a href="{% url 'shop_url' %}">Shop Us</a>
         <a href="{% url 'homepage_url' %}">About Us</a>
         <a href="{% url 'chat_page_url' %}">Chat Bot</a>
-
     </div>
 
     {% block main %}
@@ -186,19 +184,49 @@
             var dropdown = document.getElementById("dropdown-menu");
             var hamburger = document.querySelector(".hamburger");
             
-            dropdown.classList.toggle("active"); // Toggle dropdown visibility
-            hamburger.classList.toggle("active"); // Trigger hamburger menu animation
+            dropdown.classList.toggle("active");
+            hamburger.classList.toggle("active");
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             var links = document.querySelectorAll(".nav-link");
             var currentUrl = window.location.href;
 
-            links.forEach(function(link) {
+            links.forEach(function (link) {
                 if (link.href === currentUrl) {
-                    link.classList.add("active"); // Apply 'active' class to current page's link
+                    link.classList.add("active");
                 }
             });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var darkModeEnabled = "{{ request.session.dark_mode }}" === "True";
+
+            if (darkModeEnabled) {
+                document.body.classList.add("dark-mode");
+            }
+
+            var darkModeButton = document.getElementById("darkModeToggle");
+
+            if (darkModeButton) {
+                darkModeButton.addEventListener("click", function () {
+                    fetch("{% url 'toggle_dark_mode' %}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.dark_mode) {
+                            document.body.classList.add("dark-mode");
+                        } else {
+                            document.body.classList.remove("dark-mode");
+                        }
+                    })
+                    .catch(error => console.error("Error toggling Dark Mode:", error));
+                });
+            }
         });
     </script>
 </body>

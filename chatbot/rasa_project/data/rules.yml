@@ -25,3 +25,18 @@ rules:
   steps:
     - intent: check_order_status
     - action: action_check_order_status
+
+- rule: Fetch product list
+  steps:
+    - intent: fetch_product_list
+    - action: action_fetch_product_names
+
+- rule: Get FAQs
+  steps:
+    - intent: ask_faq
+    - action: action_get_faq
+
+- rule: Get policies
+  steps:
+    - intent: ask_policies
+    - action: action_get_policies

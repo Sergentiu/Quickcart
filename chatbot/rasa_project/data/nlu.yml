@@ -1,6 +1,7 @@
 version: "3.1"
 
 nlu:
+# Intent: Greetings
 - intent: greet
   examples: |
     - hey
@@ -13,86 +14,315 @@ nlu:
     - let's go
     - good afternoon
 
+# Intent: Goodbye
 - intent: goodbye
   examples: |
-    - cu
+    - bye
     - goodbye
     - see you later
-    - have a nice day
+    - take care
+    - talk to you later
     - bye bye
+    - have a nice day
 
+# Intent: Affirmation
 - intent: affirm
   examples: |
     - yes
-    - indeed
-    - of course
+    - yeah
+    - sure
+    - absolutely
     - correct
+    - indeed
+    - that's right
 
+# Intent: Denial
 - intent: deny
   examples: |
     - no
-    - never
+    - nope
     - not really
     - I don't think so
+    - never
+    - not at all
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - wonderful
-    - I am feeling very good
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - I'm so sad
-
+# Intent: Bot Challenge
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
-    - am I talking to a human?
+    - who are you?
+    - what are you?
+    - tell me about yourself
 
+# Intent: User is happy
+- intent: mood_great
+  examples: |
+    - I'm feeling great
+    - I am happy
+    - I'm doing well
+    - Everything is awesome
+    - Life is good
+    - I feel amazing
+
+# Intent: User is unhappy
+- intent: mood_unhappy
+  examples: |
+    - I'm feeling down
+    - I'm sad
+    - I don't feel well
+    - I'm disappointed
+    - I am not happy
+    - Feeling depressed
+    - Having a bad day
+
+# Intent: Fetch product list dynamically
+- intent: fetch_product_list
+  examples: |
+    - Show me all available products
+    - What products do you have?
+    - List all your products
+    - Tell me what items you sell
+
+# Intent: Ask Product Price
 - intent: ask_product_price
   examples: |
     - What is the price of [Air Force 1](product_name)?
+    - Wht prce [airforce 1](product_name)?  # Malformed
     - How much does [Jordan 4 Retro](product_name) cost?
-    - Price of [T-Shirt](product_name)?
-    - Can you tell me the cost of [Fridge](product_name)?
-    - What's the price for [Microwave](product_name)?
-    - I want to know how much [Blender](product_name) is.
-    - How much does [Nike Air Force 1](product_name) cost?
+    - Hw mch cst [jordn 4 retro](product_name)?  # Malformed
+    - Tell me the cost of [T-Shirt](product_name).
+    - Tll m cost [tshirt](product_name)?  # Malformed
+    - I want to know how much the [Nike Air Force One](product_name) is.
+    - I wnt knw hw mch [airforce 1](product_name)?  # Malformed
+    - What's the price for [AF1](product_name)?
+    - Wht prc fr [AF1](product_name)?  # Malformed
+    - How much for [Retro Jordans](product_name)?
+    - Hw mch fr [Retro Jordans](product_name)?  # Malformed
+    - How much does [Nike Jordan 4](product_name) cost?
+    - Hw mch [Nike Jordan 4](product_name) cst?  # Malformed
     - Give me the price for [AirPods Pro](product_name).
-    - Tell me the cost of [Adidas Yeezy](product_name).
-    - What's the price of [Burger](product_name)?
-    - How much does a [Bucket](product_name) cost?
-    - How much for [Motor Oil](product_name)?
+    - Gv m prc fr [AirPods Pro](product_name)?  # Malformed
+    - Price of a [Tire](product_name)?
+    - Prc a [tyre](product_name)?  # Malformed
+    - What’s the cost of a [car tire](product_name)?
+    - Wht cst a [car tire](product_name)?  # Malformed
+    - Can you tell me the cost for [AirForce 1](product_name)?
+    - Cn u tll m cst fr [airforce 1](product_name)?  # Malformed
+    - How much is [AirForc 1](product_name)?
+    - Hw mch [airforc 1](product_name)?  # Malformed
+    - What's the cost of [Nike Airforce One](product_name)?
+    - Wht cst [Nike Airforce One](product_name)?  # Malformed
+    - How much does Force cost?
+    - Hw mch Force cst?  # Malformed
+    - What is the price for a [T-Shirt](product_name)?
+    - Wht prce a [tshirt](product_name)?  # Malformed
+    - How much do [Jeans](product_name) cost?
+    - Hw mch [jeanz](product_name) cst?  # Malformed
+    - Can you give me the cost for [Underwear](product_name)?
+    - Cn u gv m cst fr [underware](product_name)?  # Malformed
+    - What’s the price tag on these [Socks](product_name)?
+    - Wht prc tag [sox](product_name)?  # Malformed
+    - How much is [Jordan 4 Retro](product_name) going for?
+    - Hw mch [jordn 4 retro](product_name) gng fr?  # Malformed
+    - Price for [Washing Machine](product_name), please.
+    - Prc fr [washingmachine](product_name), pls?  # Malformed
+    - I need the price for [Fridge](product_name).
+    - I nd prc fr [fridg](product_name)?  # Malformed
+    - What’s the cost of a [Microwave](product_name)?
+    - Wht cst a [microwav](product_name)?  # Malformed
+    - Can you tell me how much [Blender](product_name) costs?
+    - Cn u tll m hw mch [blendr](product_name) cst?  # Malformed
+    - What's the price of a [Spark Plug](product_name)?
+    - Wht prc a [sparkplug](product_name)?  # Malformed
+    - How much does [Motor Oil](product_name) cost?
+    - Hw mch [motoroil](product_name) cst?  # Malformed
+    - Price for a [Burger](product_name)?
+    - Prc a [burgar](product_name)?  # Malformed
+    - What is the cost of a [Pizza](product_name)?
+    - Wht cst a [piza](product_name)?  # Malformed
+    - How much is a [Croissant](product_name)?
+    - Hw mch a [croisant](product_name)?  # Malformed
+    - What is the price of a [Bucket](product_name)?
+    - Wht prce a [buket](product_name)?  # Malformed
+    - Can you provide the cost for a [Pen](product_name)?
+    - Cn u prvde cst fr a [pn](product_name)?  # Malformed
+    - How expensive is [Air Force 1](product_name)?
+    - Hw xpnsve [airforce 1](product_name)?  # Malformed
+    - What does a [Tire](product_name) cost?
+    - Wht a [tyre](product_name) cst?  # Malformed
+    - Can you quote me the price for [Jeans](product_name)?
+    - Cn u qte m prc fr [jeanz](product_name)?  # Malformed
+    - How much are [Underwear](product_name) priced at?
+    - Hw mch [underware](product_name) prcd at?  # Malformed
+    - What's the going rate for [Socks](product_name)?
+    - Wht gng rate fr [sox](product_name)?  # Malformed
 
+# Intent: Ask Product Details
 - intent: ask_product_details
   examples: |
     - Can you give details about [AirPods Pro](product_name)?
+    - Cn u gv dtls abt [AirPods Pro](product_name)?  # Malformed
     - What are the specifications of [Dell XPS 13](product_name)?
+    - Wht r spcfctns [Dell XPS 13](product_name)?  # Malformed
     - Tell me about [PlayStation 5](product_name).
+    - Tll m abt [PlayStation 5](product_name)?  # Malformed
     - What can you tell me about [Jeans](product_name)?
+    - Wht cn u tll m abt [jeanz](product_name)?  # Malformed
     - Explain the features of [Pizza](product_name).
+    - Xpln ftrs [piza](product_name)?  # Malformed
+    - Give me more info about [Fridge](product_name).
+    - Gv m mre info [fridg](product_name)?  # Malformed
+    - What is special about [Jordan 4 Retro](product_name)?
+    - Wht spcl abt [jordn 4 retro](product_name)?  # Malformed
+    - I'd like to know more about [Airforce 1](product_name).
+    - Id lik knw mre [airforce 1](product_name)?  # Malformed
+    - Could you provide details for [Nike Airforce One](product_name)?
+    - Cld u prvde dtls [Nike Airforce One](product_name)?  # Malformed
+    - Tell me more about [AirForc 1](product_name)?
+    - Tll m mre [airforc 1](product_name)?  # Malformed
+    - Do you have any info on Force sneakers?
+    - Do u hv info Force snkrs?  # Malformed
+    - What are the key features of a [T-Shirt](product_name)?
+    - Wht r ky ftrs a [tshirt](product_name)?  # Malformed
+    - Can you describe the design and material of [Jeans](product_name)?
+    - Cn u dscrbe dsgn mat [jeanz](product_name)?  # Malformed
+    - Tell me the details about [Underwear](product_name).
+    - Tll m dtls abt [underware](product_name)?  # Malformed
+    - What should I know about [Socks](product_name)?
+    - Wht shld I knw abt [sox](product_name)?  # Malformed
+    - Provide specifications for [Jordan 4 Retro](product_name).
+    - Prvde spcfctns [jordn 4 retro](product_name)?  # Malformed
+    - What are the important features of a [Washing Machine](product_name)?
+    - Wht r imprtnt ftrs a [washingmachine](product_name)?  # Malformed
+    - Give me details about the capacity and energy rating of a [Fridge](product_name).
+    - Gv m dtls abt cpcty enrgy [fridg](product_name)?  # Malformed
+    - What are the main features of a [Microwave](product_name)?
+    - Wht r mn ftrs a [microwav](product_name)?  # Malformed
+    - Describe the functions and settings of a [Blender](product_name).
+    - Dscrbe fnctns sttngs [blendr](product_name)?  # Malformed
+    - Can you give me specs for a [Spark Plug](product_name)?
+    - Cn u gv m spcs [sparkplug](product_name)?  # Malformed
+    - What details do you have on [Motor Oil](product_name)?
+    - Wht dtls u hv on [motoroil](product_name)?  # Malformed
+    - Tell me about the ingredients and preparation of a [Burger](product_name).
+    - Tll m abt ingr prprtn [burgar](product_name)?  # Malformed
+    - What is unique about a [Pizza](product_name)?
+    - Wht unq abt a [piza](product_name)?  # Malformed
+    - Can you describe the taste and texture of a [Croissant](product_name)?
+    - Cn u dscrbe tst txtre [croisant](product_name)?  # Malformed
+    - What are the dimensions and features of a [Bucket](product_name)?
+    - Wht r dmnsns ftrs a [buket](product_name)?  # Malformed
+    - Provide more information about the design of a [Pen](product_name).
+    - Prvde mre info abt dsgn a [pn](product_name)?  # Malformed
+    - What distinguishes [Air Force 1](product_name) from other sneakers?
+    - Wht dstngshs [airforce 1](product_name) frm snkrs?  # Malformed
+    - Can you list the features of a [Tire](product_name)?
+    - Cn u lst ftrs a [tyre](product_name)?  # Malformed
 
+# Intent: Check Order Status
 - intent: check_order_status
   examples: |
     - Where is my order with ID [12345](order_id)?
-    - Can you check the status of order [67890](order_id)?
-    - What’s happening with my order [98765](order_id)?
-    - Tell me my order status for [45678](order_id).
-    - I want to know where my order [32165](order_id) is.
+    - Wher is my ord wth ID [67890](order_id)?  # Malformed
+    - Can you check the status of order [98765](order_id)?
+    - Cn u chk stts ord [98765](order_id)?  # Malformed
+    - What’s happening with my order [45678](order_id)?
+    - Wht hppnng wth my ord [45678](order_id)?  # Malformed
+    - Tell me my order status for [32165](order_id)?
+    - Tll m ord stts fr [32165](order_id)?  # Malformed
+    - I want to know where my order [54321](order_id) is?
+    - I wnt knw wher ord [54321](order_id)?  # Malformed
+    - Check my order [11223](order_id)?
+    - Chk my ord [11223](order_id)?  # Malformed
+    - What’s the status of order number [99887](order_id)?
+    - Wht stts ord num [99887](order_id)?  # Malformed
+    - Where is order [44556](order_id) at?
+    - Wher ord [44556](order_id) at?  # Malformed
+    - Track my order [77665](order_id)?
+    - Trck my ord [77665](order_id)?  # Malformed
 
-- intent: general_greeting
+# New Intent: Ask FAQ
+- intent: ask_faq
   examples: |
-    - Hi
-    - Hello
-    - Good morning
-    - How’s it going?
-    - What’s up?
+    - What are your frequently asked questions?
+    - Wht r ur frqntly askd qstns?  # Malformed
+    - Tell me about your FAQs
+    - Tll m abt ur FAQs?  # Malformed
+    - Can you help with some common questions?
+    - Cn u hlp wth sm cmmon qstns?  # Malformed
+    - What’s in the FAQ section?
+    - Wht in FAQ sctn?  # Malformed
+    - Do you have an FAQ?
+    - Do u hv FAQ?  # Malformed
+    - How can I return a product?
+    - Hw cn I rtrn prdct?  # Malformed
+    - What’s your shipping policy?
+    - Wht ur shppng plcy?  # Malformed
+    - How long does delivery take?
+    - Hw lng dlvry tk?  # Malformed
+
+# New Intent: Ask Policies
+- intent: ask_policies
+  examples: |
+    - What are your policies?
+    - Wht r ur plcies?  # Malformed
+    - Tell me about your store policies
+    - Tll m abt ur str plcies?  # Malformed
+    - What’s your return policy?
+    - Wht ur rtrn plcy?  # Malformed
+    - Can you explain your privacy policy?
+    - Cn u xpln ur prvc plcy?  # Malformed
+    - What are the terms of service?
+    - Wht r trms srvce?  # Malformed
+    - Do you have a refund policy?
+    - Do u hv rfund plcy?  # Malformed
+    - What’s the policy on cancellations?
+    - Wht plcy cnclltns?  # Malformed
+
+# Regex Patterns
+- regex: product_name_pattern
+  examples: |
+    - (?i)(t[- ]?shirt|jeans|underwear|socks|jordan\s*4\s*retro|washing\s*machine|fridge|microwave|blender|spark\s*plug|motor\s*oil|burger|pizza|croissant|bucket|pen|air\s*force\s*1|tire)
+- regex: order_id
+  examples: |
+    - \d{2,}
+
+# Lookup table for product names
+- lookup: product_name
+  examples: |
+    - T-Shirt
+    - Jeans
+    - Underwear
+    - Socks
+    - Jordan 4 Retro
+    - Washing Machine
+    - Fridge
+    - Microwave
+    - Blender
+    - Spark Plug
+    - Motor Oil
+    - Burger
+    - Pizza
+    - Croissant
+    - Bucket
+    - Pen
+    - Air Force 1
+    - Tire
+
+# Synonyms for product_name entity (adjusted to avoid overlap)
+- synonym: Sneakers
+  examples: |
+    - Nike Runners
+- synonym: Casual Wear
+  examples: |
+    - T-Shirt
+    - Jeans
+    - Hoodie
+- synonym: Footwear
+  examples: |
+    - Air Force 1
+    - Jordan 4 Retro
+    - Sandals
+    - Boots
